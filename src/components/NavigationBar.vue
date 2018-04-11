@@ -34,6 +34,7 @@
       </div>
     </div>
     <div class="navigation-bar__inner navigation-bar__inner--edit-pagedownButtons">
+      <button class="navigation-bar__button button" @click="save" v-title="'Save'" v-if="light" ><icon-content-save></icon-content-save></button>
       <button class="navigation-bar__button button" @click="undo" v-title="'Undo'" :disabled="!canUndo"><icon-undo></icon-undo></button>
       <button class="navigation-bar__button button" @click="redo" v-title="'Redo'" :disabled="!canRedo"><icon-redo></icon-redo></button>
       <div v-for="button in pagedownButtons" :key="button.method">
@@ -196,6 +197,10 @@ export default {
           this.title = this.$store.getters['file/current'].name;
         }
       }
+    },
+    save() {
+      // todo save
+      tempFileSvc.save();
     },
     submitTitle(reset) {
       if (reset) {

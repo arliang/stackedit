@@ -21,6 +21,23 @@ export default {
     }
     this.closed = true;
   },
+  save() {
+    const content = store.getters['content/current'];
+    if (!this.closed && origin && window.parent) {
+      window.parent.postMessage({
+        type: 'save',
+        payload: {
+          id: content.id,
+          name: content.name,
+          content: {
+            text: content.text.slice(0, -1), // Remove trailing LF
+            yamlProperties: content.properties,
+            html: editorSvc.previewCtx.html,
+          },
+        },
+      }, origin);
+    }
+  },
   init() {
     if (!origin || !window.parent) {
       return Promise.resolve();
